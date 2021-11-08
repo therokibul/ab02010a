@@ -5,76 +5,65 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Back',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-                Text(
-                  'Content',
-                  style: TextStyle(color: Colors.black, fontSize: 25),
-                ),
-                Text(
-                  'Filter',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            ),
-            Image(
-              image: AssetImage('images/cat.jpg'),
-              height: 200,
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(40, 10, 100, 10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Header',
-                style: TextStyle(
-                  fontSize: 20,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.green,
+          title: Text(
+            'Profile',
+            style: TextStyle(fontSize: 40),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 25,
+              ),
+              CircleAvatar(
+                radius: 100,
+                backgroundImage: AssetImage('images/cat.jpg'),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                color: Colors.grey,
+                width: 300.0,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Rakib Hossen',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 40),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(40, 10, 100, 10),
-              child: Text(
-                'Labore eu ad esse aliqua occaecat occaecat anim occaecat voluptate aliqua cillum do aliqua.',
-                style: TextStyle(
-                  fontSize: 16,
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                color: Colors.grey,
+                width: 300.0,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Rakib Hossen',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 40),
                 ),
               ),
-            ),
-            Image(
-              image: AssetImage('images/cat.jpg'),
-              height: 200,
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(40, 10, 100, 10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Header',
-                style: TextStyle(
-                  fontSize: 20,
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                color: Colors.grey,
+                width: 300.0,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Rakib Hossen',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 40),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(40, 10, 100, 10),
-              child: Text(
-                'Labore eu ad esse aliqua occaecat occaecat anim occaecat voluptate aliqua cillum do aliqua.',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ),
