@@ -11,12 +11,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(),
-          body: Center(
-            child: Column(
-              children: [Image(image: AssetImage('images/cat.jpg'))],
+        appBar: AppBar(
+          title: Text('ListView'),
+          centerTitle: true,
+        ),
+        body: ListView(
+          children: [
+            Container(
+              height: 200,
+              color: Colors.black,
             ),
-          )),
+            Container(
+              height: 200,
+              color: Colors.green,
+            ),
+            Container(
+              height: 200,
+              color: Colors.purple,
+            ),
+            Container(
+              height: 200,
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
