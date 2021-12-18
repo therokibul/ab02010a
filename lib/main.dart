@@ -1,28 +1,34 @@
+import 'package:ab02010a/screen/home_desktop.dart';
+import 'package:ab02010a/screen/home_mobile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Column(
-            children: [
-              Image(
-                height: 200,
-                image: NetworkImage(
-                    'https://cdn.pixabay.com/photo/2021/10/20/07/41/monkey-d-luffy-6725313_960_720.png'),
-              ),
-              Text('Network Image'),
-              Image(
-                height: 200,
-                image: AssetImage('images/cat.jpg'),
-              ),
-              Text('Asset Image')
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: LayoutCreator(),
+    );
+  }
+}
+
+class LayoutCreator extends StatelessWidget {
+  const LayoutCreator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      if (constraints.maxWidth > 600) {
+        return HomeDesktop();
+      } else {
+        return HomeMobile();
+      }
+    });
+  }
 }
