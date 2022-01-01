@@ -7,8 +7,24 @@ class Second extends StatefulWidget {
   State<Second> createState() => _SecondState();
 }
 
-class _SecondState extends State<Second> {
+class _SecondState extends State<Second> with SingleTickerProviderStateMixin {
   bool animationValue = true;
+  late AnimationController animationController;
+  late Animation<double> curveAnimation;
+  late Animation<double> curveAnimation1;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController =
+        AnimationController(duration: Duration(seconds: 3), vsync: this);
+    curveAnimation = CurvedAnimation(
+        parent: animationController, curve: Curves.elasticInOut);
+    curveAnimation1 =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+
+    animationController.repeat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +33,29 @@ class _SecondState extends State<Second> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
-              duration: Duration(seconds: 3),
-              height: animationValue ? 200 : 300,
-              width: animationValue ? 200 : 300,
-              decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius:
-                      BorderRadius.circular(animationValue ? 20 : 150)),
+            RotationTransition(
+              turns: Tween<double>(begin: 0, end: 1).animate(curveAnimation),
+              child: Container(
+                height: 40,
+                width: 200,
+                color: Colors.green,
+              ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    animationValue = !animationValue;
-                  });
-                },
-                child: Text('Animation Update'))
+            RotationTransition(
+              turns: Tween<double>(begin: 0, end: 1).animate(curveAnimation),
+              child: Container(
+                height: 200,
+                width: 200,
+                color: Colors.green,
+              ),
+            ),
+            RotationTransition(
+              turns: Tween<double>(begin: 0, end: 1).animate(curveAnimation1),
+              child: Icon(
+                Icons.star,
+                size: 50,
+              ),
+            ),
           ],
         ),
       ),
