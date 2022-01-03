@@ -1,6 +1,3 @@
-import 'package:ab02010a/pages/first.dart';
-import 'package:ab02010a/pages/second.dart';
-import 'package:ab02010a/pages/third.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -10,50 +7,93 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-int activeIndex = 0;
-List bodyItem = [
-  First(),
-  Second(),
-  Third(),
-];
+bool bulb1 = false;
+bool bulb2 = false;
+bool bulb3 = false;
 
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: bodyItem[activeIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: activeIndex,
-        onTap: (value) {
-          setState(() {
-            activeIndex = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'First'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.catching_pokemon_outlined), label: 'Second'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined), label: 'Third'),
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.lightbulb,
+                size: 50,
+                color:bulb1? Colors.red: Colors.black,
+              ),
+              Icon(
+                Icons.lightbulb,
+                size: 50,
+                color:bulb2? Colors.red: Colors.black,
+              ),
+              Icon(
+                Icons.lightbulb,
+                size: 50,
+                color:bulb3? Colors.red: Colors.black,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    bulb1= !bulb1;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  color: Colors.red,
+                  child: Text(
+                    'single tap',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              InkWell(
+                onDoubleTap: () {
+                  setState(() {
+                    bulb2= !bulb2;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  color: Colors.red,
+                  child: Text(
+                    'Double tap',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              InkWell(
+                onLongPress: () {
+                  setState(() {
+                    bulb3= !bulb3;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  color: Colors.red,
+                  child: Text(
+                    'Long Press',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
-    );
+    ));
   }
 }
-
-
-
-// GridView.count(
-//         crossAxisCount: 2,
-//         children: [
-//           Card(color: Colors.blue,),
-//           Card(color: Colors.red,),
-//           Card(color: Colors.green,),
-//           Card(color: Colors.pink,),
-//           Card(color: Colors.purple,),
-//           Card(color: Colors.black,),
-//           Card(color: Colors.blue,),
-//           Card(color: Colors.red,),
-//         ],
-        
-//         ),
