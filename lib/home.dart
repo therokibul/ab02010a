@@ -1,99 +1,169 @@
 import 'package:flutter/material.dart';
-
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+import 'package:math_expressions/math_expressions.dart';
+class Calculator extends StatefulWidget {
+  const Calculator({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  _CalculatorState createState() => _CalculatorState();
 }
 
-bool bulb1 = false;
-bool bulb2 = false;
-bool bulb3 = false;
+class _CalculatorState extends State<Calculator> {
+  String equation = '0';
+  String result = '0';
+  String expresstion = '';
+  double equationFontSize = 50;
+  double resultFontSize = 40;
 
-class _HomeState extends State<Home> {
+  buttonOnPressed(String buttonText) {
+    setState(() {
+      if (buttonText == 'C') {
+        equation = '0';
+        result = '0';
+        equationFontSize = 50;
+        resultFontSize = 40;
+      } else if (buttonText == '←') {
+        equationFontSize = 50;
+        resultFontSize = 40;
+        equation = equation.substring(0, equation.length - 1);
+        if (equation == '') {
+          equation = '0';
+        }
+      } else if (buttonText == '=') {
+        equationFontSize = 40;
+        resultFontSize = 50;
+        expresstion = equation;
+        expresstion = expresstion.replaceAll('×', '*');
+        expresstion = expresstion.replaceAll('÷', '/');
+
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expresstion);
+          ContextModel cm = ContextModel();
+          double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+          result = "$eval";
+        } catch (e) {
+          result = 'Error';
+        }
+      } else {
+        equationFontSize = 50;
+        resultFontSize = 40;
+        if (equation == '0') {
+          equation = buttonText;
+        } else {
+          equation = equation + buttonText;
+        }
+      }
+    });
+  }
+
+  Widget buidButton(String buttonText, double buttonHeight, Color buttonColor) {
+    return Container(
+      margin: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          color: buttonColor, borderRadius: BorderRadius.circular(24)),
+      height: MediaQuery.of(context).size.height * 0.1 * buttonHeight,
+      child: MaterialButton(
+        onPressed: () {
+          buttonOnPressed(buttonText);
+        },
+        padding: EdgeInsets.all(16),
+        child: Text(
+          buttonText,
+          style: TextStyle(
+            fontSize: 25,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.lightbulb,
-                size: 50,
-                color:bulb1? Colors.red: Colors.black,
+      backgroundColor: Color(0xff17171C),
+      // appBar: AppBar(
+      //   title: Text('Calculator'),
+      //   backgroundColor: Color(0xff17171C),
+      // ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: Text(
+                equation,
+                style:
+                    TextStyle(fontSize: equationFontSize, color: Colors.white),
               ),
-              Icon(
-                Icons.lightbulb,
-                size: 50,
-                color:bulb2? Colors.red: Colors.black,
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: Text(
+                result,
+                style: TextStyle(fontSize: resultFontSize, color: Colors.white),
               ),
-              Icon(
-                Icons.lightbulb,
-                size: 50,
-                color:bulb3? Colors.red: Colors.black,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    bulb1= !bulb1;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
-                  color: Colors.red,
-                  child: Text(
-                    'single tap',
-                    style: TextStyle(color: Colors.white),
+            ),
+            Expanded(child: Divider()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: screenSize.width * 0.75,
+                  child: Table(
+                    children: [
+                      TableRow(children: [
+                        buidButton('C', 1, Color(0xff4E505F)),
+                        buidButton('←', 1, Color(0xff4E505F)),
+                        buidButton('÷', 1, Color(0xff4E505F))
+                      ]),
+                      TableRow(children: [
+                        buidButton('7', 1, Color(0xff2E2F38)),
+                        buidButton('8', 1, Color(0xff2E2F38)),
+                        buidButton('9', 1, Color(0xff2E2F38))
+                      ]),
+                      TableRow(children: [
+                        buidButton('4', 1, Color(0xff2E2F38)),
+                        buidButton('5', 1, Color(0xff2E2F38)),
+                        buidButton('6', 1, Color(0xff2E2F38))
+                      ]),
+                      TableRow(children: [
+                        buidButton('1', 1, Color(0xff2E2F38)),
+                        buidButton('2', 1, Color(0xff2E2F38)),
+                        buidButton('3', 1, Color(0xff2E2F38))
+                      ]),
+                      TableRow(children: [
+                        buidButton('.', 1, Color(0xff2E2F38)),
+                        buidButton('0', 1, Color(0xff2E2F38)),
+                        buidButton('00', 1, Color(0xff2E2F38))
+                      ]),
+                    ],
                   ),
                 ),
-              ),
-              InkWell(
-                onDoubleTap: () {
-                  setState(() {
-                    bulb2= !bulb2;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
-                  color: Colors.red,
-                  child: Text(
-                    'Double tap',
-                    style: TextStyle(color: Colors.white),
+                Container(
+                  width: screenSize.width * 0.25,
+                  child: Table(
+                    children: [
+                      TableRow(
+                          children: [buidButton('×', 1, Color(0xff4B5EFC))]),
+                      TableRow(
+                          children: [buidButton('-', 1, Color(0xff4B5EFC))]),
+                      TableRow(
+                          children: [buidButton('+', 1, Color(0xff4B5EFC))]),
+                      TableRow(
+                          children: [buidButton('=', 2.2, Color(0xff4B5EFC))]),
+                    ],
                   ),
-                ),
-              ),
-              InkWell(
-                onLongPress: () {
-                  setState(() {
-                    bulb3= !bulb3;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
-                  color: Colors.red,
-                  child: Text(
-                    'Long Press',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
